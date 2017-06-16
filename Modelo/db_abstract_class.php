@@ -10,10 +10,10 @@ abstract class db_abstract_class {
 
     public $isConnected;
     protected $datab;
-    private $username = "root";
-    private $password = "";
+    private $username = "mypet";
+    private $password = "mypet2017";
     private $host = "localhost";
-    private $dbname = "odontologos";
+    private $dbname = "mypet";
 
     # métodos abstractos para ABM de clases que hereden
     abstract protected static function buscarForId($id);
