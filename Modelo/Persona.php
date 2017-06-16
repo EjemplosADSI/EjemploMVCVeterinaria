@@ -373,7 +373,26 @@ class Persona extends db_abstract_class
 
     protected function insertar()
     {
-        // TODO: Implement insertar() method.
+        $this->insertRow("INSERT INTO persona VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+                $this->Tipo_Documento,
+                $this->Documento,
+                $this->Nombres,
+                $this->Apellidos,
+                $this->Telefono,
+                $this->Direccion,
+                $this->Correo,
+                $this->Foto,
+                $this->NRP,
+                $this->Fecha_Registro,
+                $this->Profesion,
+                $this->Usuario,
+                $this->Contrasena,
+                $this->Tipo_Usuario,
+                $this->Estado,
+            )
+        );
+        $this->Disconnect();
+
     }
 
     protected function editar()
