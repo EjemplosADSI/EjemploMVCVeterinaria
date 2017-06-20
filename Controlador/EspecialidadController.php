@@ -22,27 +22,21 @@ class EspecialidadController{
 
     static public function crear (){
         try {
-            $arrayEspecialista = array();
-            $arrayEspecialista['Tipo'] = $_POST['Tipo'];
-            $arrayEspecialista['Nombre'] = $_POST['Nombre'];
-            $arrayEspecialista['Apellido'] = $_POST['Apellido'];
-            $arrayEspecialista['Direccion'] = $_POST['Direccion'];
-            $arrayEspecialista['TipoDocumento'] = $_POST['TipoDocumento'];
-            $arrayEspecialista['Documento'] = $_POST['Documento'];
-            $arrayEspecialista['Email'] = $_POST['Email'];
-            $arrayEspecialista['Genero'] = $_POST['Genero'];
-            $arrayEspecialista['Telefono'] = $_POST['Telefono'];
-            $Especialista = new Especialista ($arrayEspecialista);
-            $Especialista->insertar();
-            header("Location: ../Vista/pages/registroEspecialista.php?respuesta=correcto");
+            $arrayEspecialidad = array();
+            $arrayEspecialidad['Nombre'] = $_POST['Nombre'];
+            $arrayEspecialidad['Estado'] = $_POST['Estado'];
+            $Especialidad = new Especialidad ($arrayEspecialidad);
+            $Especialidad->insertar();
+            header("Location: ../Vista/createEspecialidad.php?respuesta=correcto");
         } catch (Exception $e) {
-            header("Location: ../Vista/pages/registroEspecialista.php?respuesta=error");
+            header("Location: ../Vista/createEspecialidad.php?respuesta=error");
         }
     }
 
+    /*
     static public function selectEspecialista ($isRequired=true, $id="idEspecialista", $nombre="idEspecialista", $class=""){
         $arrEspecialistas = Especialista::getAll(); /*  */
-        $htmlSelect = "<select ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
+        /*$htmlSelect = "<select ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
         $htmlSelect .= "<option >Seleccione</option>";
         if(count($arrEspecialistas) > 0){
             foreach ($arrEspecialistas as $especialista)
@@ -50,7 +44,7 @@ class EspecialidadController{
         }
         $htmlSelect .= "</select>";
         return $htmlSelect;
-    }
+    }*/
 
     /*
     static public function editar (){

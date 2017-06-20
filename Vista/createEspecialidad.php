@@ -63,7 +63,24 @@
                   </div>
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" novalidate>
+                    <?php if(!empty($_GET['respuesta'])){ ?>
+                        <?php if ($_GET['respuesta'] == "correcto"){ ?>
+                            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                <strong>La especialidad!</strong> se ha creado correctamente.
+                            </div>
+                        <?php }else {?>
+                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Error!</strong> No se pudo ingresar la especialidad intentalo nuevamente!!
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+
+
+                    <form class="form-horizontal form-label-left" method="post" action="../Controlador/EspecialidadController.php?action=crear" novalidate>
 
                       <p>Ingrese toda la informacion relacionada con la <code>Especialidad</code>
                       </p>
@@ -73,14 +90,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nombre <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="Nombre de la Especialidad" required="required" type="text">
+                          <input id="Nombre" class="form-control col-md-7 col-xs-12" name="Nombre" placeholder="Nombre de la Especialidad" required="required" type="text">
                         </div>
                       </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Estado <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control">
+                                <select id="Estado" name="Estado" class="form-control">
                                     <option>Activo</option>
                                     <option>Inactivo</option>
                                 </select>

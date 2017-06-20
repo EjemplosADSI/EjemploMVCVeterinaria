@@ -13,18 +13,18 @@ class Especialidad extends db_abstract_class
 {
     private $idEspacialidad;
     private $Nombre;
-    private $Estdo;
+    private $Estado;
 
     /**
      * Especialidad constructor.
      * @param $idEspacialidad
      * @param $Nombre
-     * @param $Estdo
+     * @param $Estado
      */
     public function __construct($Especialidad_data = array())
     {
 
-        arent::__construct(); //Llama al contructor padre "la clase conexion" para conectarme a la BD
+        parent::__construct(); //Llama al contructor padre "la clase conexion" para conectarme a la BD
         if(count($Especialidad_data)>1){ //
             foreach ($Especialidad_data as $campo => $valor){
                 $this->$campo = $valor;
@@ -32,7 +32,7 @@ class Especialidad extends db_abstract_class
         }else {
             $this->idEspacialidad = "";
             $this->Nombre = "";
-            $this->Estdo = "";
+            $this->Estado = "";
         }
     }
 
@@ -56,11 +56,11 @@ class Especialidad extends db_abstract_class
         // TODO: Implement getAll() method.
     }
 
-    protected function insertar()
+    public function insertar()
     {
         $this->insertRow("INSERT INTO mypet.especialidad VALUES (NULL, ?, ?)", array(
                 $this->Nombre,
-                $this->Estdo,
+                $this->Estado,
             )
         );
         $this->Disconnect();
@@ -111,17 +111,17 @@ class Especialidad extends db_abstract_class
     /**
      * @return mixed
      */
-    public function getEstdo()
+    public function getEstado()
     {
-        return $this->Estdo;
+        return $this->Estado;
     }
 
     /**
-     * @param mixed $Estdo
+     * @param mixed $Estado
      */
-    public function setEstdo($Estdo)
+    public function setEstado($Estado)
     {
-        $this->Estdo = $Estdo;
+        $this->Estado = $Estado;
     }
 
 
