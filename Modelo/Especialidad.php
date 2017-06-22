@@ -11,7 +11,7 @@ require_once('db_abstract_class.php');
 
 class Especialidad extends db_abstract_class
 {
-    private $idEspacialidad;
+    private $idEspecialidad;
     private $Nombre;
     private $Estado;
 
@@ -30,7 +30,7 @@ class Especialidad extends db_abstract_class
                 $this->$campo = $valor;
             }
         }else {
-            $this->idEspacialidad = "";
+            $this->idEspecialidad = "";
             $this->Nombre = "";
             $this->Estado = "";
         }
@@ -41,19 +41,41 @@ class Especialidad extends db_abstract_class
         unset($this);
     }
 
-    protected static function buscarForId($id)
+    public static function buscarForId($id)
     {
-        // TODO: Implement buscarForId() method.
+        $Especial = new Especialidad();
+        if ($id > 0){
+            $getrow = $Especial->getRow("SELECT * FROM especialidad WHERE idEspecialidad =?", array($id));
+            $Especial->idEspecialidad = $getrow['idEspecialidad'];
+            $Especial->Nombre = $getrow['Nombre'];
+            $Especial->Estado = $getrow['Estado'];
+            $Especial->Disconnect();
+            return $Especial;
+        }else{
+            return NULL;
+        }
     }
 
-    protected static function buscar($query)
+    public static function buscar($query)
     {
-        // TODO: Implement buscar() method.
+        $arrEspecialidades = array();
+        $tmp = new Especialidad();
+        $getrows = $tmp->getRows($query);
+
+        foreach ($getrows as $valor) {
+            $especial = new Especialidad();
+            $especial->idEspecialidad = $valor['idEspecialidad'];
+            $especial->Nombre = $valor['Nombre'];
+            $especial->Estado = $valor['Estado'];
+            array_push($arrEspecialidades, $especial);
+        }
+        $tmp->Disconnect();
+        return $arrEspecialidades;
     }
 
-    protected static function getAll()
+    public static function getAll()
     {
-        // TODO: Implement getAll() method.
+        return Especialidad::buscar("SELECT * FROM especialidad");
     }
 
     public function insertar()
@@ -66,9 +88,14 @@ class Especialidad extends db_abstract_class
         $this->Disconnect();
     }
 
-    protected function editar()
+    public function editar()
     {
-        // TODO: Implement editar() method.
+        $this->updateRow("UPDATE mypet.especialidad SET Nombre = ?, Estado = ? WHERE idEspecialidad = ?", array(
+            $this->Nombre,
+            $this->Estado,
+            $this->idEspecialidad,
+        ));
+        $this->Disconnect();
     }
 
     protected function eliminar($id)
@@ -79,17 +106,17 @@ class Especialidad extends db_abstract_class
     /**
      * @return mixed
      */
-    public function getIdEspacialidad()
+    public function getIdEspecialidad()
     {
-        return $this->idEspacialidad;
+        return $this->idEspecialidad;
     }
 
     /**
-     * @param mixed $idEspacialidad
+     * @param mixed $idEspecialidad
      */
-    public function setIdEspacialidad($idEspacialidad)
+    public function setIdEspecialidad($idEspecialidad)
     {
-        $this->idEspacialidad = $idEspacialidad;
+        $this->idEspecialidad = $idEspecialidad;
     }
 
     /**

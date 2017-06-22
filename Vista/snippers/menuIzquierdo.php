@@ -28,10 +28,19 @@
                     <li><a><i class="fa fa-book"></i> Especialidades <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="createEspecialidad.php">Crear</a></li>
-                            <li><a href="index2.html">Administrar</a></li>
+                            <li><a href="gestionarEspecialidades.php">Administrar</a></li>
                         </ul>
                     </li>
                 </ul>
+                <ul class="nav side-menu">
+                    <li><a><i class="fa fa-book"></i> Vacunas <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="Crearvacuna.php">Crear</a></li>
+                            <li><a href="Cr.php">Administrar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
             </div>
         </div>
         <!-- /sidebar menu -->

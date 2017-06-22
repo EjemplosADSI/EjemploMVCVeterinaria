@@ -13,11 +13,15 @@ class EspecialidadController{
     static function main($action){
         if ($action == "crear"){
             EspecialidadController::crear();
-        }/*else if ($action == "editar"){
-            EspecialistaController::editar();
+        }else if ($action == "editar"){
+            EspecialidadController::editar();
         }else if ($action == "buscarID"){
-            EspecialistaController::buscarID(1);
-        }*/
+            EspecialidadController::buscarID();
+        }else if ($action == "ActivarEspecialidad"){
+            EspecialidadController::ActivarEspecialidad();
+        }else if ($action == "InactivarEspecialidad"){
+            EspecialidadController::InactivarEspecialidad();
+        }
     }
 
     static public function crear (){
@@ -46,51 +50,66 @@ class EspecialidadController{
         return $htmlSelect;
     }*/
 
-    /*
+
     static public function editar (){
         try {
-            $arrayOdonto = array();
-            $arrayOdonto['nombre'] = $_POST['nombre'];
-            $arrayOdonto['apellidos'] = $_POST['apellidos'];
-            $arrayOdonto['especialidad'] = $_POST['especialidad'];
-            $arrayOdonto['direccion'] = $_POST['direccion'];
-            $arrayOdonto['celular'] = $_POST['celular'];
-            $arrayOdonto['user'] = $_POST['user'];
-            $arrayOdonto['pass'] = $_POST['pass'];
-            $arrayOdonto['Telefono'] = $_POST['Telefono'];
-            $arrayOdonto['idodontologos'] = $_POST['idodontologos'];
-            $odonto = new Odontologos ($arrayOdonto);
-            $odonto->editar();
-            header("Location: ../registroEspecialista.php?respuesta=correcto");
+            $arrayEspecialidad = array();
+            $arrayEspecialidad['Nombre'] = $_POST['Nombre'];
+            $arrayEspecialidad['Estado'] = $_POST['Estado'];
+            $arrayEspecialidad['idEspecialidad'] = $_POST['idEspecialidad'];
+            $especial = new Especialidad($arrayEspecialidad);
+            $especial->editar();
+            header("Location: ../Vista/editarEspecialidad.php?respuesta=correcto");
         } catch (Exception $e) {
-            header("Location: ../registroEspecialista.php?respuesta=error");
+            header("Location: ../Vista/editarEspecialidad.php?respuesta=error");
         }
-    }*/
+    }
 
-    /*
+    static public function ActivarEspecialidad (){
+        try {
+            $ObjEspecialidad = Especialidad::buscarForId($_GET['IdEspecialidad']);
+            $ObjEspecialidad->setEstado("Activo");
+            $ObjEspecialidad->editar();
+            header("Location: ../Vista/gestionarEspecialidades.php");
+        } catch (Exception $e) {
+            header("Location: ../Vista/gestionarEspecialidades.php?respuesta=error");
+        }
+    }
+
+    static public function InactivarEspecialidad (){
+        try {
+            $ObjEspecialidad = Especialidad::buscarForId($_GET['IdEspecialidad']);
+            $ObjEspecialidad->setEstado("Inactivo");
+            $ObjEspecialidad->editar();
+            header("Location: ../Vista/gestionarEspecialidades.php");
+        } catch (Exception $e) {
+            header("Location: ../Vista/gestionarEspecialidades.php?respuesta=error");
+        }
+    }
+
     static public function buscarID ($id){
         try {
-            return Odontologos::buscarForId($id);
+            return Especialidad::buscarForId($id);
         } catch (Exception $e) {
-            header("Location: ../buscarOdontologos.php?respuesta=error");
+            header("Location: ../gestionarEspecialidades.php?respuesta=error");
         }
     }
 
     public function buscarAll (){
         try {
-            return Odontologos::getAll();
+            return Especialidad::getAll();
         } catch (Exception $e) {
-            header("Location: ../buscarOdontologos.php?respuesta=error");
+            header("Location: ../gestionarEspecialidades.php?respuesta=error");
         }
     }
 
-    public function buscar ($campo, $parametro){
+    public function buscar ($Query){
         try {
-            return Odontologos::getAll();
+            return Especialidad::buscar($Query);
         } catch (Exception $e) {
-            header("Location: ../buscarOdontologos.php?respuesta=error");
+            header("Location: ../gestionarEspecialidades.php?respuesta=error");
         }
-    }*/
+    }
 
 }
 ?>

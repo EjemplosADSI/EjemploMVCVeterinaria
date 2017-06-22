@@ -1,3 +1,4 @@
+<?php require "../Controlador/EspecialidadController.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -62,12 +63,14 @@
                   </div>
                   <div class="x_content">
 
+
+
                     <?php if(!empty($_GET['respuesta'])){ ?>
                         <?php if ($_GET['respuesta'] == "correcto"){ ?>
                             <div class="alert alert-success alert-dismissible fade in" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                 </button>
-                                <strong>La especialidad!</strong> se ha creado correctamente.
+                                <strong>La especialidad!</strong> se ha actualizado correctamente.
                             </div>
                         <?php }else {?>
                             <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -78,38 +81,54 @@
                         <?php } ?>
                     <?php } ?>
 
+                      <?php if(!empty($_GET["id"]) && isset($_GET["id"])){ ?>
+                          <?php
+                                $DataEspecialidad = EspecialidadController::buscarID($_GET["id"]);
 
-                    <form class="form-horizontal form-label-left" method="post" action="../Controlador/EspecialidadController.php?action=crear" novalidate>
+                          ?>
+                          <form class="form-horizontal form-label-left" method="post" action="../Controlador/EspecialidadController.php?action=editar" novalidate>
 
-                      <p>Ingrese toda la informacion relacionada con la <code>Especialidad</code>
-                      </p>
-                      <span class="section">Informacion General</span>
+                              <p>Ingrese toda la informacion relacionada con la <code>Especialidad</code>
+                              </p>
+                              <span class="section">Informacion General</span>
 
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nombre <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="Nombre" class="form-control col-md-7 col-xs-12" name="Nombre" placeholder="Nombre de la Especialidad" required="required" type="text">
-                        </div>
-                      </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Estado <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="Estado" name="Estado" class="form-control">
-                                    <option>Activo</option>
-                                    <option>Inactivo</option>
-                                </select>
-                            </div>
-                        </div>
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-md-offset-3">
-                          <button type="submit" class="btn btn-primary">Cancelar</button>
-                          <button id="send" type="submit" class="btn btn-success">Enviar</button>
-                        </div>
-                      </div>
-                    </form>
+                              <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nombre <span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <input id="idEspecialidad" value="<?php echo $DataEspecialidad->getIdEspecialidad(); ?>" name="idEspecialidad" hidden required="required" type="text">
+                                      <input id="Nombre" value="<?php echo $DataEspecialidad->getNombre(); ?>" class="form-control col-md-7 col-xs-12" name="Nombre" placeholder="Nombre de la Especialidad" required="required" type="text">
+                                  </div>
+                              </div>
+                              <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Estado <span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <select id="Estado" name="Estado" class="form-control">
+                                          <option <?php if($DataEspecialidad->getEstado() == "Activo"){ echo "selected"; } ?>>Activo</option>
+                                          <option <?php if($DataEspecialidad->getEstado() == "Inactivo"){ echo "selected"; } ?>>Inactivo</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="ln_solid"></div>
+                              <div class="form-group">
+                                  <div class="col-md-6 col-md-offset-3">
+                                      <button type="submit" class="btn btn-primary">Cancelar</button>
+                                      <button id="send" type="submit" class="btn btn-success">Enviar</button>
+                                  </div>
+                              </div>
+                          </form>
+
+                      <?php }else{ ?>
+                          <?php if (empty($_GET["respuesta"])){ ?>
+                              <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                  </button>
+                                  <strong>Error!</strong> No se encontro ninguna especialidad con el parametro de busqueda.
+                              </div>
+                          <?php } ?>
+                      <?php } ?>
+
                   </div>
                 </div>
               </div>
