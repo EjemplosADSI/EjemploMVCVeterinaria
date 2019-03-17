@@ -16,7 +16,7 @@ class EspecialidadController{
         }else if ($action == "editar"){
             EspecialidadController::editar();
         }else if ($action == "buscarID"){
-            EspecialidadController::buscarID();
+            EspecialidadController::buscarID($_REQUEST['idEspecialidad']);
         }else if ($action == "ActivarEspecialidad"){
             EspecialidadController::ActivarEspecialidad();
         }else if ($action == "InactivarEspecialidad"){
@@ -31,16 +31,16 @@ class EspecialidadController{
             $arrayEspecialidad['Estado'] = $_POST['Estado'];
             $Especialidad = new Especialidad ($arrayEspecialidad);
             $Especialidad->insertar();
-            header("Location: ../Vista/createEspecialidad.php?respuesta=correcto");
+            header("Location: ../Vista/modules/especialidad/create.php?respuesta=correcto");
         } catch (Exception $e) {
-            header("Location: ../Vista/createEspecialidad.php?respuesta=error");
+            var_dump($e);
+            header("Location: ../Vista/modules/especialidad/create.php?respuesta=error");
         }
     }
 
-    /*
     static public function selectEspecialista ($isRequired=true, $id="idEspecialista", $nombre="idEspecialista", $class=""){
-        $arrEspecialistas = Especialista::getAll(); /*  */
-        /*$htmlSelect = "<select ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
+        $arrEspecialistas = Especialista::getAll();
+        $htmlSelect = "<select ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
         $htmlSelect .= "<option >Seleccione</option>";
         if(count($arrEspecialistas) > 0){
             foreach ($arrEspecialistas as $especialista)
@@ -48,7 +48,7 @@ class EspecialidadController{
         }
         $htmlSelect .= "</select>";
         return $htmlSelect;
-    }*/
+    }
 
 
     static public function editar (){
@@ -59,9 +59,9 @@ class EspecialidadController{
             $arrayEspecialidad['idEspecialidad'] = $_POST['idEspecialidad'];
             $especial = new Especialidad($arrayEspecialidad);
             $especial->editar();
-            header("Location: ../Vista/editarEspecialidad.php?respuesta=correcto");
+            header("Location: ../Vista/modules/especialidad/edit.php?respuesta=correcto");
         } catch (Exception $e) {
-            header("Location: ../Vista/editarEspecialidad.php?respuesta=error");
+            header("Location: ../Vista/modules/especialidad/edit.php?respuesta=error");
         }
     }
 
@@ -70,9 +70,9 @@ class EspecialidadController{
             $ObjEspecialidad = Especialidad::buscarForId($_GET['IdEspecialidad']);
             $ObjEspecialidad->setEstado("Activo");
             $ObjEspecialidad->editar();
-            header("Location: ../Vista/gestionarEspecialidades.php");
+            header("Location: ../Vista/modules/especialidad/manager.php");
         } catch (Exception $e) {
-            header("Location: ../Vista/gestionarEspecialidades.php?respuesta=error");
+            header("Location: ../Vista/modules/especialidad/manager.php?respuesta=error");
         }
     }
 
@@ -81,9 +81,9 @@ class EspecialidadController{
             $ObjEspecialidad = Especialidad::buscarForId($_GET['IdEspecialidad']);
             $ObjEspecialidad->setEstado("Inactivo");
             $ObjEspecialidad->editar();
-            header("Location: ../Vista/gestionarEspecialidades.php");
+            header("Location: ../Vista/modules/especialidad/manager.php");
         } catch (Exception $e) {
-            header("Location: ../Vista/gestionarEspecialidades.php?respuesta=error");
+            header("Location: ../Vista/modules/especialidad/manager.php?respuesta=error");
         }
     }
 
@@ -91,7 +91,7 @@ class EspecialidadController{
         try {
             return Especialidad::buscarForId($id);
         } catch (Exception $e) {
-            header("Location: ../gestionarEspecialidades.php?respuesta=error");
+            header("Location: ../Vista/modules/especialidad/manager.php?respuesta=error");
         }
     }
 
@@ -99,7 +99,7 @@ class EspecialidadController{
         try {
             return Especialidad::getAll();
         } catch (Exception $e) {
-            header("Location: ../gestionarEspecialidades.php?respuesta=error");
+            header("Location: ../Vista/modules/especialidad/manager.php?respuesta=error");
         }
     }
 
@@ -107,9 +107,8 @@ class EspecialidadController{
         try {
             return Especialidad::buscar($Query);
         } catch (Exception $e) {
-            header("Location: ../gestionarEspecialidades.php?respuesta=error");
+            header("Location: ../Vista/modules/especialidad/manager.php?respuesta=error");
         }
     }
 
 }
-?>

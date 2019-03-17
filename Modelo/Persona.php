@@ -25,47 +25,8 @@ class Persona extends db_abstract_class
     private $Usuario;
     private $Contrasena;
     private $Tipo_Usuario;
+    private $Observaciones;
     private $Estado;
-
-    /**
-     * Persona constructor.
-     * @param $idPersona
-     * @param $Tipo_Documento
-     * @param $Documento
-     * @param $Nombres
-     * @param $Apellidos
-     * @param $Telefono
-     * @param $Direccion
-     * @param $Correo
-     * @param $Foto
-     * @param $NRP
-     * @param $Fecha_Registro
-     * @param $Profesion
-     * @param $Usuario
-     * @param $Contrasena
-     * @param $Tipo_Usuario
-     * @param $Estado
-     */
-
-    /**
-     * Persona constructor.
-     * @param $idPersona
-     * @param $Tipo_Documento
-     * @param $Documento
-     * @param $Nombres
-     * @param $Apellidos
-     * @param $Telefono
-     * @param $Direccion
-     * @param $Correo
-     * @param $Foto
-     * @param $NRP
-     * @param $Fecha_Registro
-     * @param $Profesion
-     * @param $Usuario
-     * @param $Contrasena
-     * @param $Tipo_Usuario
-     * @param $Estado
-     */
 
     public function __construct($persona_data=array())
     {
@@ -85,7 +46,6 @@ class Persona extends db_abstract_class
             $this->Correo = "";
             $this->Foto = "";
             $this->NRP = "";
-            $this->Fecha_Registro = "";
             $this->Profesion = "";
             $this->Usuario = "";
             $this->Contrasena = "";
@@ -343,6 +303,22 @@ class Persona extends db_abstract_class
     /**
      * @return mixed
      */
+    public function getObservaciones()
+    {
+        return $this->Observaciones;
+    }
+
+    /**
+     * @param mixed $Observaciones
+     */
+    public function setObservaciones($Observaciones)
+    {
+        $this->Observaciones = $Observaciones;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getEstado()
     {
         return $this->Estado;
@@ -356,24 +332,74 @@ class Persona extends db_abstract_class
         $this->Estado = $Estado;
     }
 
-    protected static function buscarForId($id)
+    public static function buscarForId($id)
     {
-        // TODO: Implement buscarForId() method.
+        $Persona = new Persona();
+        if ($id > 0){
+            $getrow = $Persona->getRow("SELECT * FROM persona WHERE idPersona =?", array($id));;
+            $Persona->idPersona = $getrow['idPersona'];
+            $Persona->Tipo_Documento = $getrow['Tipo_Documento'];
+            $Persona->Documento = $getrow['Documento'];
+            $Persona->Nombres = $getrow['Nombres'];
+            $Persona->Apellidos = $getrow['Apellidos'];
+            $Persona->Telefono = $getrow['Telefono'];
+            $Persona->Direccion = $getrow['Direccion'];
+            $Persona->Correo = $getrow['Correo'];
+            $Persona->Foto = $getrow['Foto'];
+            $Persona->NRP = $getrow['NRP'];
+            $Persona->Fecha_Registro = $getrow['Fecha_Registro'];
+            $Persona->Profesion = $getrow['Profesion'];
+            $Persona->Usuario = $getrow['Usuario'];
+            $Persona->Contrasena = $getrow['Contrasena'];
+            $Persona->Tipo_Usuario = $getrow['Tipo_Usuario'];
+            $Persona->Observaciones = $getrow['Observaciones'];
+            $Persona->Estado = $getrow['Estado'];
+            $Persona->Disconnect();
+            return $Persona;
+        }else{
+            return NULL;
+        }
     }
 
-    protected static function buscar($query)
+    public static function buscar($query)
     {
-        // TODO: Implement buscar() method.
+        $arrPersonas = array();
+        $tmp = new Especialidad();
+        $getrows = $tmp->getRows($query);
+
+        foreach ($getrows as $valor) {
+            $Persona = new Persona();
+            $Persona->idPersona = $valor['idPersona'];
+            $Persona->Tipo_Documento = $valor['Tipo_Documento'];
+            $Persona->Documento = $valor['Documento'];
+            $Persona->Nombres = $valor['Nombres'];
+            $Persona->Apellidos = $valor['Apellidos'];
+            $Persona->Telefono = $valor['Telefono'];
+            $Persona->Direccion = $valor['Direccion'];
+            $Persona->Correo = $valor['Correo'];
+            $Persona->Foto = $valor['Foto'];
+            $Persona->NRP = $valor['NRP'];
+            $Persona->Fecha_Registro = $valor['Fecha_Registro'];
+            $Persona->Profesion = $valor['Profesion'];
+            $Persona->Usuario = $valor['Usuario'];
+            $Persona->Contrasena = $valor['Contrasena'];
+            $Persona->Tipo_Usuario = $valor['Tipo_Usuario'];
+            $Persona->Observaciones = $valor['Observaciones'];
+            $Persona->Estado = $valor['Estado'];
+            array_push($arrPersonas, $Persona);
+        }
+        $tmp->Disconnect();
+        return $arrPersonas;
     }
 
-    protected static function getAll()
+    public static function getAll()
     {
-        // TODO: Implement getAll() method.
+        return Persona::buscar("SELECT * FROM persona");
     }
 
-    protected function insertar()
+    public function insertar()
     {
-        $this->insertRow("INSERT INTO persona VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+        $this->insertRow("INSERT INTO persona VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, ?)", array(
                 $this->Tipo_Documento,
                 $this->Documento,
                 $this->Nombres,
@@ -383,24 +409,42 @@ class Persona extends db_abstract_class
                 $this->Correo,
                 $this->Foto,
                 $this->NRP,
-                $this->Fecha_Registro,
                 $this->Profesion,
                 $this->Usuario,
                 $this->Contrasena,
                 $this->Tipo_Usuario,
+                $this->Observaciones,
                 $this->Estado,
             )
         );
         $this->Disconnect();
-
     }
 
-    protected function editar()
+    public function editar()
     {
-        // TODO: Implement editar() method.
+        $this->updateRow("UPDATE persona SET Tipo_Documento = ?, Documento = ?, Nombres = ?, Apellidos = ?, Telefono = ?, Direccion = ?, Correo = ?, Foto = ?, NRP = ?, Profesion = ?, Usuario = ?, Contrasena = ?, Tipo_Usuario = ?, Observaciones = ?, Estado = ? WHERE idPersona = ?", array(
+            $this->Tipo_Documento,
+            $this->Documento,
+            $this->Nombres,
+            $this->Apellidos,
+            $this->Telefono,
+            $this->Direccion,
+            $this->Correo,
+            $this->Foto,
+            $this->NRP,
+            $this->Fecha_Registro,
+            $this->Profesion,
+            $this->Usuario,
+            $this->Contrasena,
+            $this->Tipo_Usuario,
+            $this->Observaciones,
+            $this->Estado,
+            $this->idPersona,
+        ));
+        $this->Disconnect();
     }
 
-    protected function eliminar($id)
+    public function eliminar($id)
     {
         // TODO: Implement eliminar() method.
     }

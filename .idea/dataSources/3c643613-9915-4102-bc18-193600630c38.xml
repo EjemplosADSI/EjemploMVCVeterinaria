@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="mypet@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.11">
     <root id="1"/>
     <schema id="2" parent="1" name="mypet">
       <Current>1</Current>
@@ -44,47 +44,47 @@
     <table id="38" parent="2" name="vacunas"/>
     <column id="39" parent="30" name="idCitas_Medicas">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="40" parent="30" name="Fecha">
       <Position>2</Position>
-      <DataType>datetime|0</DataType>
+      <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="41" parent="30" name="Tipo">
       <Position>3</Position>
-      <DataType>enum(&apos;Urgencias&apos;, &apos;Control&apos;, &apos;Procedimiento&apos;, &apos;Cirugia&apos;, &apos;Vacunacion&apos;)|0</DataType>
+      <DataType>enum(&apos;Urgencias&apos;, &apos;Control&apos;, &apos;Procedimiento&apos;, &apos;Cirugia&apos;, &apos;Vacunacion&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="42" parent="30" name="Duracion">
       <Position>4</Position>
-      <DataType>time|0</DataType>
+      <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="43" parent="30" name="Observacion">
       <Position>5</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="44" parent="30" name="Valor">
       <Position>6</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
     </column>
     <column id="45" parent="30" name="Persona">
       <Position>7</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="46" parent="30" name="Consultorio">
       <Position>8</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="47" parent="30" name="Estado">
       <Position>9</Position>
-      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0</DataType>
+      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="48" parent="30" name="fk_Citas_Medicas_Consultorio1_idx">
@@ -102,41 +102,37 @@
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>persona</RefTableName>
       <RefColNames>idPersona</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="52" parent="30" name="fk_Citas_Medicas_Consultorio1">
       <ColNames>Consultorio</ColNames>
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>consultorio</RefTableName>
       <RefColNames>idConsultorio</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="53" parent="31" name="idConsultorio">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="54" parent="31" name="Nombre">
       <Position>2</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="55" parent="31" name="Especialidad">
       <Position>3</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="56" parent="31" name="Jornada">
       <Position>4</Position>
-      <DataType>set(&apos;Mañana&apos;, &apos;Tarde&apos;, &apos;Noche&apos;)|0</DataType>
+      <DataType>set(&apos;Mañana&apos;, &apos;Tarde&apos;, &apos;Noche&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="57" parent="31" name="Estado">
       <Position>5</Position>
-      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0</DataType>
+      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="58" parent="31" name="fk_Consultorio_Especialidad1_idx">
@@ -151,23 +147,21 @@
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>especialidad</RefTableName>
       <RefColNames>idEspecialidad</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="61" parent="32" name="idEspecialidad">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="62" parent="32" name="Nombre">
       <Position>2</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="63" parent="32" name="Estado">
       <Position>3</Position>
-      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0</DataType>
+      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="64" parent="32" name="PRIMARY">
@@ -176,35 +170,35 @@
     </key>
     <column id="65" parent="33" name="idHistoria_Clinica">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="66" parent="33" name="Enfermedades">
       <Position>2</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="67" parent="33" name="Medicamentos">
       <Position>3</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="68" parent="33" name="Recomendaciones">
       <Position>4</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="69" parent="33" name="Cita_Medica">
       <Position>5</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="70" parent="33" name="Vacunas">
       <Position>6</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="71" parent="33" name="Estado">
       <Position>7</Position>
-      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0</DataType>
+      <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="72" parent="33" name="fk_Historia_Clinica_Citas_Medicas1_idx">
@@ -222,75 +216,71 @@
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>citas_medicas</RefTableName>
       <RefColNames>idCitas_Medicas</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="76" parent="33" name="fk_Historia_Clinica_Vacunas1">
       <ColNames>Vacunas</ColNames>
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>vacunas</RefTableName>
       <RefColNames>idVacunas</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="77" parent="34" name="idMascotas">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="78" parent="34" name="Nombre">
       <Position>2</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="79" parent="34" name="Foto">
       <Position>3</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="80" parent="34" name="Peso">
       <Position>4</Position>
-      <DataType>float|0</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="81" parent="34" name="Talla">
       <Position>5</Position>
-      <DataType>float|0</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="82" parent="34" name="Especie">
       <Position>6</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="83" parent="34" name="Raza">
       <Position>7</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="84" parent="34" name="FechaNacimiento">
       <Position>8</Position>
-      <DataType>date|0</DataType>
+      <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="85" parent="34" name="HabitosAlimenticios">
       <Position>9</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="86" parent="34" name="Vacunas">
       <Position>10</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
     </column>
     <column id="87" parent="34" name="Dueno">
       <Position>11</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="88" parent="34" name="Observaciones">
       <Position>12</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <index id="89" parent="34" name="fk_Mascotas_Persona1_idx">
       <ColNames>Dueno</ColNames>
@@ -304,17 +294,15 @@
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>persona</RefTableName>
       <RefColNames>idPersona</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="92" parent="35" name="Mascota">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="93" parent="35" name="Vacunas">
       <Position>2</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="94" parent="35" name="fk_Mascotas_has_Vacunas_Mascotas1_idx">
@@ -333,98 +321,94 @@ Vacunas</ColNames>
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>mascotas</RefTableName>
       <RefColNames>idMascotas</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="98" parent="35" name="fk_Mascotas_has_Vacunas_Vacunas1">
       <ColNames>Vacunas</ColNames>
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>vacunas</RefTableName>
       <RefColNames>idVacunas</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="99" parent="36" name="idPersona">
       <Position>1</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="100" parent="36" name="Tipo_Documento">
       <Position>2</Position>
-      <DataType>enum(&apos;C.C&apos;, &apos;T.I&apos;, &apos;C.E&apos;, &apos;R.C&apos;, &apos;Otros&apos;)|0</DataType>
+      <DataType>enum(&apos;C.C&apos;, &apos;T.I&apos;, &apos;C.E&apos;, &apos;R.C&apos;, &apos;Otros&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="101" parent="36" name="Documento">
       <Position>3</Position>
-      <DataType>bigint(20)|0</DataType>
+      <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="102" parent="36" name="Nombres">
       <Position>4</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="103" parent="36" name="Apellidos">
       <Position>5</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="104" parent="36" name="Telefono">
       <Position>6</Position>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="105" parent="36" name="Direccion">
       <Position>7</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="106" parent="36" name="Correo">
       <Position>8</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="107" parent="36" name="Foto">
       <Position>9</Position>
-      <DataType>varchar(40)|0</DataType>
+      <DataType>varchar(40)|0s</DataType>
     </column>
     <column id="108" parent="36" name="NRP">
       <Position>10</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>int(10) unsigned|0s</DataType>
     </column>
     <column id="109" parent="36" name="Fecha_Registro">
       <Position>11</Position>
-      <DataType>timestamp|0</DataType>
+      <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
     <column id="110" parent="36" name="Profesion">
       <Position>12</Position>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
     </column>
     <column id="111" parent="36" name="Usuario">
       <Position>13</Position>
-      <DataType>varchar(40)|0</DataType>
+      <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="112" parent="36" name="Contrasena">
       <Position>14</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="113" parent="36" name="Tipo_Usuario">
       <Position>15</Position>
-      <DataType>enum(&apos;Administrador&apos;, &apos;Secretaria&apos;, &apos;Medico&apos;, &apos;Cliente&apos;)|0</DataType>
+      <DataType>enum(&apos;Administrador&apos;, &apos;Secretaria&apos;, &apos;Medico&apos;, &apos;Cliente&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="114" parent="36" name="Observaciones">
       <Position>16</Position>
-      <DataType>text|0</DataType>
+      <DataType>text|0s</DataType>
     </column>
     <column id="115" parent="36" name="Estado">
       <Position>17</Position>
-      <DataType>enum(&apos;Act ivo&apos;, &apos;Inactivo&apos;, &apos;Suspendido&apos;)|0</DataType>
+      <DataType>enum(&apos;Act ivo&apos;, &apos;Inactivo&apos;, &apos;Suspendido&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="116" parent="36" name="Documento_UNIQUE">
@@ -457,12 +441,12 @@ Vacunas</ColNames>
     </key>
     <column id="123" parent="37" name="Persona">
       <Position>1</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="124" parent="37" name="Especialidad">
       <Position>2</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="125" parent="37" name="fk_Persona_has_Especialidad_Especialidad1_idx">
@@ -481,31 +465,27 @@ Especialidad</ColNames>
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>persona</RefTableName>
       <RefColNames>idPersona</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="129" parent="37" name="fk_Persona_has_Especialidad_Especialidad1">
       <ColNames>Especialidad</ColNames>
       <RefSchemaName>mypet</RefSchemaName>
       <RefTableName>especialidad</RefTableName>
       <RefColNames>idEspecialidad</RefColNames>
-      <OnUpdate>no-action</OnUpdate>
-      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="130" parent="38" name="idVacunas">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="131" parent="38" name="Nombre">
       <Position>2</Position>
-      <DataType>varchar(40)|0</DataType>
+      <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="132" parent="38" name="Laboratorio">
       <Position>3</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="133" parent="38" name="PRIMARY">

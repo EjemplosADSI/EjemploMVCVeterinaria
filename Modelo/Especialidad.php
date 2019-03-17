@@ -38,7 +38,7 @@ class Especialidad extends db_abstract_class
 
     function __destruct() {
         $this->Disconnect();
-        unset($this);
+        //unset($this);
     }
 
     public static function buscarForId($id)
