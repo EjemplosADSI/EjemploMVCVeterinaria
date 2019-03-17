@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vista/plantilla_base/gentelella" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vendor/verot/class.upload.php" vcs="Git" />
   </component>
 </project>

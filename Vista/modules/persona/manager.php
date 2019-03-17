@@ -1,4 +1,4 @@
-<?php require ("../Modelo/Especialidad.php")?>
+<?php require ("../../../Modelo/Persona.php")?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,33 +11,33 @@
     <title>DataTables | Gentelella</title>
 
     <!-- Bootstrap -->
-    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Datatables -->
-    <link href="vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    <link href="vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="build/css/custom.min.css" rel="stylesheet">
+    <link href="../../build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <?php require("snippers/menuIzquierdo.php");?>
+        <?php require("../../snippers/menuIzquierdo.php");?>
 
         <!-- top navigation -->
-        <?php require("snippers/menusuperior.php");?>
+        <?php require("../../snippers/menusuperior.php");?>
         <!-- /top navigation -->
 
         <!-- page content -->
@@ -45,7 +45,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>Especialidades <small>Administrar</small></h3>
+                        <h3>Personas <small>Administrar</small></h3>
                     </div>
 
                 </div>
@@ -56,7 +56,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Gestionar <small>Especialidades</small></h2>
+                                <h2>Gestionar <small>Personaes</small></h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -76,13 +76,17 @@
                             </div>
                             <div class="x_content">
                                 <p class="text-muted font-13 m-b-30">
-                                    Selecciona una especialidad para gestionarla
+                                    Selecciona una Persona para gestionarla
                                 </p>
 
                                 <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
+                                        <th>Documento</th>
                                         <th>Nombre</th>
+                                        <th>Apellidos</th>
+                                        <th>Telefono</th>
+                                        <th>Correo</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -90,18 +94,23 @@
                                     <tbody>
 
                                     <?php
-                                        $arrEspecialidades = Especialidad::getAll();
-                                        foreach ($arrEspecialidades as $especialidad){
-                                    ?>
+                                    $arrPersonas = Persona::getAll();
+                                    foreach ($arrPersonas as $Persona){
+                                        ?>
                                         <tr>
-                                            <td><?php echo $especialidad->getNombre(); ?></td>
-                                            <td><?php echo $especialidad->getEstado(); ?></td>
+                                            <td><?php echo $Persona->getDocumento(); ?></td>
+                                            <td><?php echo $Persona->getNombres(); ?></td>
+                                            <td><?php echo $Persona->getApellidos(); ?></td>
+                                            <td><?php echo $Persona->getTelefono(); ?></td>
+                                            <td><?php echo $Persona->getCorreo(); ?></td>
+                                            <td><?php echo $Persona->getEstado(); ?></td>
                                             <td>
-                                                <a href="editarEspecialidad.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>" type="button" data-toggle="tooltip" title="Actualizar" class="btn docs-tooltip btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                                                <?php if ($especialidad->getEstado() != "Activo"){ ?>
-                                                    <a href="../Controlador/EspecialidadController.php?action=ActivarEspecialidad&IdEspecialidad=<?php echo $especialidad->getIdEspecialidad(); ?>" type="button" data-toggle="tooltip" title="Activar" class="btn docs-tooltip btn-success btn-xs"><i class="fa fa-check-square-o"></i></a>
+                                                <a href="edit.php?id=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Actualizar" class="btn docs-tooltip btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                                                <a href="view.php?id=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Ver" class="btn docs-tooltip btn-warning btn-xs"><i class="fa fa-eye"></i></a>
+                                                <?php if ($Persona->getEstado() != "Activo"){ ?>
+                                                    <a href="../../../Controlador/PersonaController.php?action=ActivarPersona&IdPersona=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Activar" class="btn docs-tooltip btn-success btn-xs"><i class="fa fa-check-square-o"></i></a>
                                                 <?php }else{ ?>
-                                                    <a type="button" href="../Controlador/EspecialidadController.php?action=InactivarEspecialidad&IdEspecialidad=<?php echo $especialidad->getIdEspecialidad(); ?>" data-toggle="tooltip" title="Inactivar" class="btn docs-tooltip btn-danger btn-xs"><i class="fa fa-times-circle-o"></i></a>
+                                                    <a type="button" href="../../../Controlador/PersonaController.php?action=InactivarPersona&IdPersona=<?php echo $Persona->getIdPersona(); ?>" data-toggle="tooltip" title="Inactivar" class="btn docs-tooltip btn-danger btn-xs"><i class="fa fa-times-circle-o"></i></a>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -117,49 +126,42 @@
         </div>
         <!-- /page content -->
 
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
+        <?php require("../../snippers/footer.php"); ?>
     </div>
 </div>
 
 <!-- jQuery -->
-<script src="vendors/jquery/dist/jquery.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="vendors/fastclick/lib/fastclick.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
-<script src="vendors/nprogress/nprogress.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/nprogress/nprogress.js"></script>
 <!-- iCheck -->
-<script src="vendors/iCheck/icheck.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/iCheck/icheck.min.js"></script>
 <!-- Datatables -->
-<script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="vendors/jszip/dist/jszip.min.js"></script>
-<script src="vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/jszip/dist/jszip.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <!-- Cropper -->
-<script src="vendors/cropper/dist/cropper.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/cropper/dist/cropper.min.js"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="build/js/custom.min.js"></script>
+<script src="../../build/js/custom.min.js"></script>
 
 </body>
 </html>

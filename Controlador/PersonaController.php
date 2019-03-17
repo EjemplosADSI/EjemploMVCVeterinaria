@@ -1,5 +1,5 @@
 <?php
-
+require_once (__DIR__.'/../Modelo/GeneralFunctions.php');
 require_once (__DIR__.'/../Modelo/Persona.php');
 
 if(!empty($_GET['action'])){
@@ -34,21 +34,29 @@ class PersonaController{
             $arrayPersona['Telefono'] = $_POST['Telefono'];
             $arrayPersona['Direccion'] = $_POST['Direccion'];
             $arrayPersona['Correo'] = $_POST['Correo'];
-            $arrayPersona['Foto'] = (isset($_POST['Foto']) ? $_POST['Foto'] : "Sin Foto");
-            $arrayPersona['NRP'] = $_POST['NRP'];
-            $arrayPersona['Profesion'] = $_POST['Profesion'];
+            $arrayPersona['NRP'] = (!empty($_POST['NRP']) ? $_POST['NRP'] : NULL);
+            $arrayPersona['Profesion'] = (!empty($_POST['NRP']) ? $_POST['Profesion'] : NULL);
             $arrayPersona['Usuario'] = $_POST['Usuario'];
             $arrayPersona['Contrasena'] = $_POST['Contrasena'];
             $arrayPersona['Tipo_Usuario'] = $_POST['Tipo_Usuario'];
-            $arrayPersona['Observaciones'] = (isset($_POST['Observaciones']) ? $_POST['Observaciones'] : "");
+            $arrayPersona['Observaciones'] = (!empty($_POST['Observaciones']) ? $_POST['Observaciones'] : NULL);
             $arrayPersona['Estado'] = 'Activo';
+
+            //Subir el archivo
+            if (!empty($_FILES['Foto'])){
+                $NameFile = GeneralFunctions::SubirArchivo($_FILES['Foto'],'../Vista/filesUploaded/');
+                if ($NameFile != false){
+                    $arrayPersona['Foto'] = $NameFile;
+                }else{
+                    throw new Exception('La imagen no se pudo subir.');
+                }
+            }
 
             $Persona = new Persona ($arrayPersona);
             $Persona->insertar();
-            header("Location: ../Vista/modules/persona/createPersona.php?respuesta=correcto");
+            header("Location: ../Vista/modules/persona/create.php?respuesta=correcto");
         } catch (Exception $e) {
-            var_dump($e);
-            header("Location: ../Vista/modules/persona/createPersona.php?respuesta=error");
+            header("Location: ../Vista/modules/persona/create.php?respuesta=error&mensaje=".$e->getMessage());
         }
     }
 
@@ -75,20 +83,36 @@ class PersonaController{
             $arrayPersona['Telefono'] = $_POST['Telefono'];
             $arrayPersona['Direccion'] = $_POST['Direccion'];
             $arrayPersona['Correo'] = $_POST['Correo'];
-            $arrayPersona['Foto'] = $_POST['Foto'];
-            $arrayPersona['NRP'] = $_POST['NRP'];
-            $arrayPersona['Fecha_Registro'] = $_POST['Fecha_Registro'];
-            $arrayPersona['Profesion'] = $_POST['Profesion'];
+            $arrayPersona['NRP'] = (!empty($_POST['NRP']) ? $_POST['NRP'] : NULL);
+            $arrayPersona['Profesion'] = (!empty($_POST['NRP']) ? $_POST['Profesion'] : NULL);
             $arrayPersona['Usuario'] = $_POST['Usuario'];
             $arrayPersona['Contrasena'] = $_POST['Contrasena'];
             $arrayPersona['Tipo_Usuario'] = $_POST['Tipo_Usuario'];
+            $arrayPersona['Observaciones'] = (!empty($_POST['Observaciones']) ? $_POST['Observaciones'] : NULL);
             $arrayPersona['Estado'] = $_POST['Estado'];
             $arrayPersona['idPersona'] = $_POST['idPersona'];
-            $especial = new Persona($arrayPersona);
-            $especial->editar();
-            header("Location: ../Vista/modules/persona/edit.php?respuesta=correcto");
+
+            //Subir el archivo
+            if (!empty($_FILES['Foto']) && ($_FILES['Foto']["name"] != "" )){
+                var_dump($_FILES['Foto']);
+                $NameFile = GeneralFunctions::SubirArchivo($_FILES['Foto'],'../Vista/filesUploaded/');
+                if ($NameFile != false){
+                    $arrayPersona['Foto'] = $NameFile;
+                }else{
+                    throw new Exception('La imagen no se pudo subir.');
+                }
+            }else{
+                $persona = PersonaController::buscarID($arrayPersona['idPersona']);
+                $arrayPersona['Foto'] = $persona->getFoto();
+            }
+
+            $person = new Persona($arrayPersona);
+            $person->editar();
+
+            header("Location: ../Vista/modules/persona/view.php?id=".$person->getIdPersona()."&respuesta=correcto");
         } catch (Exception $e) {
-            header("Location: ../Vista/modules/persona/edit.php?respuesta=error");
+            var_dump($e);
+            //header("Location: ../Vista/modules/persona/edit.php?respuesta=error");
         }
     }
 
@@ -110,7 +134,8 @@ class PersonaController{
             $ObjPersona->editar();
             header("Location: ../Vista/modules/persona/manager.php");
         } catch (Exception $e) {
-            header("Location: ../Vista/modules/persona/manager.php?respuesta=error");
+            var_dump($e);
+            //header("Location: ../Vista/modules/persona/manager.php?respuesta=error");
         }
     }
 

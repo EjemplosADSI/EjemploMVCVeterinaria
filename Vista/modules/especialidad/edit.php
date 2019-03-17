@@ -1,4 +1,4 @@
-<?php require "../Controlador/EspecialidadController.php"; ?>
+<?php require "../../../Controlador/EspecialidadController.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,23 +11,23 @@
     <title>Gentelella Alela! | </title>
 
     <!-- Bootstrap -->
-    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
     
     <!-- Custom Theme Style -->
-    <link href="build/css/custom.min.css" rel="stylesheet">
+    <link href="../../build/css/custom.min.css" rel="stylesheet">
   </head>
 
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
-          <?php require("snippers/menuIzquierdo.php");?>
+          <?php require("../../snippers/menuIzquierdo.php");?>
 
           <!-- top navigation -->
-          <?php require("snippers/menusuperior.php");?>
+          <?php require("../../snippers/menusuperior.php");?>
           <!-- /top navigation -->
         <!-- page content -->
         <div class="right_col" role="main">
@@ -83,10 +83,9 @@
 
                       <?php if(!empty($_GET["id"]) && isset($_GET["id"])){ ?>
                           <?php
-                                $DataEspecialidad = EspecialidadController::buscarID($_GET["id"]);
-
+                            $DataEspecialidad = EspecialidadController::buscarID($_GET["id"]);
                           ?>
-                          <form class="form-horizontal form-label-left" method="post" action="../Controlador/EspecialidadController.php?action=editar" novalidate>
+                          <form class="form-horizontal form-label-left" method="post" action="../../../Controlador/EspecialidadController.php?action=editar">
 
                               <p>Ingrese toda la informacion relacionada con la <code>Especialidad</code>
                               </p>
@@ -113,7 +112,7 @@
                               <div class="ln_solid"></div>
                               <div class="form-group">
                                   <div class="col-md-6 col-md-offset-3">
-                                      <button type="submit" class="btn btn-primary">Cancelar</button>
+                                      <a href="manager.php" class="btn btn-primary">Cancelar</a>
                                       <button id="send" type="submit" class="btn btn-success">Enviar</button>
                                   </div>
                               </div>
@@ -136,31 +135,24 @@
           </div>
         </div>
         <!-- /page content -->
+        <?php require("../../snippers/footer.php"); ?>
 
-        <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
       </div>
     </div>
 
     <!-- jQuery -->
-    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="vendors/fastclick/lib/fastclick.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="vendors/nprogress/nprogress.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/nprogress/nprogress.js"></script>
     <!-- validator -->
-    <script src="vendors/validator/validator.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/validator/validator.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="build/js/custom.min.js"></script>
+    <script src="../../build/js/custom.min.js"></script>
 	
   </body>
 </html>

@@ -1,0 +1,3 @@
+[submodule "Vista/plantilla_base/gentelella"]
+	path = Vista/plantilla_base/gentelella
+	url = https://github.com/ColorlibHQ/gentelella

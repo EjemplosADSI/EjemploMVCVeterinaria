@@ -2,17 +2,7 @@
     "name": "grani/ejemplo-mvc-veterinaria",
     "type": "project",
     "require": {
-        "twbs/bootstrap": "^4.3",
-        "components/jquery": "^3.3",
-        "foxy/foxy" : "^1.0.0"
-    },
-    "config": {
-      "foxy": {
-        "enabled": true
-      }
-    },
-    "extra": {
-      "foxy": true
+        "verot/class.upload.php" : "dev-master"
     },
     "authors": [
         {

@@ -10,12 +10,12 @@
     <title>Gentelella Alela! | </title>
 
     <!-- Bootstrap -->
-    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../plantilla_base/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
-    
+    <link href="../../plantilla_base/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
   </head>
@@ -76,7 +76,7 @@
                             </div>
                         <?php } ?>
                     <?php } ?>
-                    <form class="form-horizontal form-label-left" method="post" action="../../../Controlador/PersonaController.php?action=crear">
+                    <form enctype="multipart/form-data" class="form-horizontal form-label-left" method="post" action="../../../Controlador/PersonaController.php?action=crear">
 
                       <p>Ingrese toda la informacion relacionada con la <code>Persona</code>
                       </p>
@@ -197,12 +197,21 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Registro</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input type="number" id="NRP" name="NRP" min="1000000000" class="form-control" placeholder="Numero de Registro Profesional" required>
+                                        <input type="number" id="NRP" name="NRP" min="1000000" class="form-control" placeholder="Numero de Registro Profesional" required>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12" >
+                                        <input type="file" size="32" name="Foto" id="Foto" />
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <img id="output"/>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -234,15 +243,57 @@
     </div>
 
     <!-- jQuery -->
-    <script src="../../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="../../vendors/fastclick/lib/fastclick.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="../../vendors/nprogress/nprogress.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/nprogress/nprogress.js"></script>
     <!-- validator -->
-    <script src="../../vendors/validator/validator.js"></script>
+    <script src="../../plantilla_base/gentelella/vendors/validator/validator.js"></script>
+
+    <script>
+
+        function removeAtributes(){
+            $("#Profesion").removeAttr("required");
+            $("#NRP").removeAttr("required");
+            $("#Foto").removeAttr("required");
+            $("#divFormDoctor").hide("slow");
+        }
+
+        function addAtributes(){
+            $("#Profesion").prop("required","required");
+            $("#NRP").prop("required","required");
+            $("#Foto").prop("required","required");
+            $("#divFormDoctor").show("slow");
+        }
+
+        $( "#Foto" ).change(function() {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('output');
+                output.src = reader.result;
+                output.width = 150;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        $("#Tipo_Usuario").change(function() {
+            var opcion = $(this).val();
+            if(opcion === "Medico"){
+                addAtributes();
+            }else{
+                removeAtributes();
+            }
+        });
+
+        $( document ).ready(function() {
+            removeAtributes();
+            $("#divFormDoctor").hide();
+        });
+
+    </script>
 
     <!-- Custom Theme Scripts -->
     <script src="../../build/js/custom.min.js"></script>

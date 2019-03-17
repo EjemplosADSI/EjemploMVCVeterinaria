@@ -294,7 +294,7 @@ if (typeof NProgress != 'undefined') {
         NProgress.start();
     });
 
-    $(window).load(function () {
+    $(window).on(function () {
         NProgress.done();
     });
 }

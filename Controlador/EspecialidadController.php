@@ -59,7 +59,7 @@ class EspecialidadController{
             $arrayEspecialidad['idEspecialidad'] = $_POST['idEspecialidad'];
             $especial = new Especialidad($arrayEspecialidad);
             $especial->editar();
-            header("Location: ../Vista/modules/especialidad/edit.php?respuesta=correcto");
+            header("Location: ../Vista/modules/especialidad/view.php?id=".$arrayEspecialidad['idEspecialidad']."&respuesta=correcto");
         } catch (Exception $e) {
             header("Location: ../Vista/modules/especialidad/edit.php?respuesta=error");
         }

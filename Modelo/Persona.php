@@ -57,7 +57,7 @@ class Persona extends db_abstract_class
     /* Metodo destructor cierra la conexion. */
     function __destruct() {
         $this->Disconnect();
-        unset($this);
+//        unset($this);
     }
 
     /**
@@ -364,7 +364,7 @@ class Persona extends db_abstract_class
     public static function buscar($query)
     {
         $arrPersonas = array();
-        $tmp = new Especialidad();
+        $tmp = new Persona();
         $getrows = $tmp->getRows($query);
 
         foreach ($getrows as $valor) {
@@ -399,7 +399,7 @@ class Persona extends db_abstract_class
 
     public function insertar()
     {
-        $this->insertRow("INSERT INTO persona VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, ?)", array(
+        $this->insertRow("INSERT INTO persona VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?)", array(
                 $this->Tipo_Documento,
                 $this->Documento,
                 $this->Nombres,
@@ -422,7 +422,7 @@ class Persona extends db_abstract_class
 
     public function editar()
     {
-        $this->updateRow("UPDATE persona SET Tipo_Documento = ?, Documento = ?, Nombres = ?, Apellidos = ?, Telefono = ?, Direccion = ?, Correo = ?, Foto = ?, NRP = ?, Profesion = ?, Usuario = ?, Contrasena = ?, Tipo_Usuario = ?, Observaciones = ?, Estado = ? WHERE idPersona = ?", array(
+        $this->updateRow("UPDATE persona SET Tipo_Documento = ?, Documento = ?, Nombres = ?, Apellidos = ?, Telefono = ?, Direccion = ?, Correo = ?, Foto = ?, NRP = ?, Fecha_Registro = NOW(), Profesion = ?, Usuario = ?, Contrasena = ?, Tipo_Usuario = ?, Observaciones = ?, Estado = ? WHERE idPersona = ?", array(
             $this->Tipo_Documento,
             $this->Documento,
             $this->Nombres,
@@ -432,7 +432,6 @@ class Persona extends db_abstract_class
             $this->Correo,
             $this->Foto,
             $this->NRP,
-            $this->Fecha_Registro,
             $this->Profesion,
             $this->Usuario,
             $this->Contrasena,
