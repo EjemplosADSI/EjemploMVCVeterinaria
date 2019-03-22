@@ -38,13 +38,18 @@ class EspecialidadController{
         }
     }
 
-    static public function selectEspecialista ($isRequired=true, $id="idEspecialista", $nombre="idEspecialista", $class=""){
-        $arrEspecialistas = Especialista::getAll();
-        $htmlSelect = "<select ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
+    static public function selectEspecialidad ($isMultiple=false,
+                                               $isRequired=true,
+                                               $id="idConsultorio",
+                                               $nombre="idConsultorio",
+                                               $defaultValue="",
+                                               $class=""){
+        $arrEspecialidad = Especialidad::getAll();
+        $htmlSelect = "<select ".(($isMultiple) ? "multiple" : "")." ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
         $htmlSelect .= "<option >Seleccione</option>";
-        if(count($arrEspecialistas) > 0){
-            foreach ($arrEspecialistas as $especialista)
-                $htmlSelect .= "<option value='".$especialista->getIdEspecialista()."'>".$especialista->getNombre()." ".$especialista->getApellido()."</option>";
+        if(count($arrEspecialidad) > 0){
+            foreach ($arrEspecialidad as $especialidad)
+                $htmlSelect .= "<option ".(($defaultValue != "") ? (($defaultValue == $especialidad->getIdEspecialidad()) ? "selected" : "" ) : "")." value='".$especialidad->getIdEspecialidad()."'>".$especialidad->getNombre()."</option>";
         }
         $htmlSelect .= "</select>";
         return $htmlSelect;

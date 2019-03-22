@@ -33,6 +33,14 @@
                     </li>
                 </ul>
                 <ul class="nav side-menu">
+                    <li><a><i class="fa fa-institution"></i> Consultorios <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?= "http://".$_SERVER["HTTP_HOST"]."/EjemploMVCVeterinaria"; ?>/Vista/modules/consultorio/create.php">Crear</a></li>
+                            <li><a href="<?= "http://".$_SERVER["HTTP_HOST"]."/EjemploMVCVeterinaria"; ?>/Vista/modules/consultorio/manager.php">Administrar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav side-menu">
                     <li><a><i class="fa fa-book"></i> Especialidades <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="<?= "http://".$_SERVER["HTTP_HOST"]."/EjemploMVCVeterinaria"; ?>/Vista/modules/especialidad/create.php">Crear</a></li>

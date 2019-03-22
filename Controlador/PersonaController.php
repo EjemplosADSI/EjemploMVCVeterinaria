@@ -60,13 +60,18 @@ class PersonaController{
         }
     }
 
-    static public function selectPersona ($isRequired=true, $id="idPersona", $nombre="idPersona", $class=""){
+    static public function selectPersona ($isMultiple=false,
+                                          $isRequired=true,
+                                          $id="idConsultorio",
+                                          $nombre="idConsultorio",
+                                          $defaultValue="",
+                                          $class=""){
         $arrPersonas = Persona::getAll();
-        $htmlSelect = "<select ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
+        $htmlSelect = "<select ".(($isMultiple) ? "multiple" : "")." ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
         $htmlSelect .= "<option >Seleccione</option>";
         if(count($arrPersonas) > 0){
             foreach ($arrPersonas as $persona)
-                $htmlSelect .= "<option value='".$persona->getIdPersona()."'>".$persona->getNombres()." ".$persona->getApellidos()."</option>";
+                $htmlSelect .= "<option ".(($persona != "") ? (($defaultValue == $persona->getIdPersona()) ? "selected" : "" ) : "")." value='".$persona->getIdPersona()."'>".$persona->getNombres()." ".$persona->getApellidos()."</option>";
         }
         $htmlSelect .= "</select>";
         return $htmlSelect;
