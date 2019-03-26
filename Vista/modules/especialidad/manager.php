@@ -104,6 +104,7 @@
                                                 <?php }else{ ?>
                                                     <a type="button" href="../../../Controlador/EspecialidadController.php?action=InactivarEspecialidad&IdEspecialidad=<?php echo $especialidad->getIdEspecialidad(); ?>" data-toggle="tooltip" title="Inactivar" class="btn docs-tooltip btn-danger btn-xs"><i class="fa fa-times-circle-o"></i></a>
                                                 <?php } ?>
+                                                <a href="managerPersonal.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>" type="button" data-toggle="tooltip" title="Gestionar Medicos" class="btn docs-tooltip btn-success btn-xs"><i class="fa fa-users"></i></a>
                                             </td>
                                         </tr>
                                     <?php } ?>

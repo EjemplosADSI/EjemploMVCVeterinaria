@@ -52,6 +52,7 @@ class Especialidad extends db_abstract_class
             $Especial->Disconnect();
             return $Especial;
         }else{
+            $Especial->Disconnect();
             return NULL;
         }
     }
@@ -67,6 +68,7 @@ class Especialidad extends db_abstract_class
             $especial->idEspecialidad = $valor['idEspecialidad'];
             $especial->Nombre = $valor['Nombre'];
             $especial->Estado = $valor['Estado'];
+            $especial->Disconnect();
             array_push($arrEspecialidades, $especial);
         }
         $tmp->Disconnect();

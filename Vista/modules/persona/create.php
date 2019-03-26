@@ -1,3 +1,4 @@
+<?php require "../../../Controlador/EspecialidadController.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -203,6 +204,18 @@
 
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <?= EspecialidadController::selectEspecialidad( false,
+                                            false,
+                                            "relEspecialidades",
+                                            "relEspecialidades",
+                                            "",
+                                            "form-control",
+                                            "Estado = 'Activo'") ?>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12" >

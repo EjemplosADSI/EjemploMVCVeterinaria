@@ -21,6 +21,10 @@ class EspecialidadController{
             EspecialidadController::ActivarEspecialidad();
         }else if ($action == "InactivarEspecialidad"){
             EspecialidadController::InactivarEspecialidad();
+        }else if ($action == "asociarPersona"){
+            EspecialidadController::asociarPersona();
+        }else if ($action == "eliminarPersona"){
+            EspecialidadController::eliminarPersona();
         }
     }
 
@@ -38,18 +42,40 @@ class EspecialidadController{
         }
     }
 
+    public static function especialidadIsInArray($idEspecialidad, $ArrEspecialidades){
+        if(count($ArrEspecialidades) > 0){
+            foreach ($ArrEspecialidades as $Especialidad){
+                if($Especialidad->getIdEspecialidad() == $idEspecialidad){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     static public function selectEspecialidad ($isMultiple=false,
                                                $isRequired=true,
                                                $id="idConsultorio",
                                                $nombre="idConsultorio",
                                                $defaultValue="",
-                                               $class=""){
-        $arrEspecialidad = Especialidad::getAll();
+                                               $class="",
+                                               $where="",
+                                               $arrExcluir = array()){
+        $arrEspecialidad = array();
+        if($where != ""){
+            $base = "SELECT * FROM especialidad WHERE ";
+            $arrEspecialidad = Especialidad::buscar($base.$where);
+        }else{
+            $arrEspecialidad = Especialidad::getAll();
+        }
         $htmlSelect = "<select ".(($isMultiple) ? "multiple" : "")." ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
-        $htmlSelect .= "<option >Seleccione</option>";
+        $htmlSelect .= "<option value=''>Seleccione</option>";
         if(count($arrEspecialidad) > 0){
-            foreach ($arrEspecialidad as $especialidad)
-                $htmlSelect .= "<option ".(($defaultValue != "") ? (($defaultValue == $especialidad->getIdEspecialidad()) ? "selected" : "" ) : "")." value='".$especialidad->getIdEspecialidad()."'>".$especialidad->getNombre()."</option>";
+            foreach ($arrEspecialidad as $especialidad){
+                if (!EspecialidadController::especialidadIsInArray($especialidad->getIdEspecialidad(),$arrExcluir))
+                    $htmlSelect .= "<option ".(($defaultValue != "") ? (($defaultValue == $especialidad->getIdEspecialidad()) ? "selected" : "" ) : "")." value='".$especialidad->getIdEspecialidad()."'>".$especialidad->getNombre()."</option>";
+            }
+
         }
         $htmlSelect .= "</select>";
         return $htmlSelect;
@@ -113,6 +139,31 @@ class EspecialidadController{
             return Especialidad::buscar($Query);
         } catch (Exception $e) {
             header("Location: ../Vista/modules/especialidad/manager.php?respuesta=error");
+        }
+    }
+
+    static public function asociarPersona(){
+        try {
+            $Especialidad = new Especialidad();
+            $Especialidad->asociarPersonal($_POST['Persona'],$_POST['Especialidad']);
+            header("Location: ../Vista/modules/persona/managerPersonal.php?respuesta=correcto&id=".$_POST['Especialidad']);
+        } catch (Exception $e) {
+            header("Location: ../Vista/modules/persona/managerPersonal.php?respuesta=error&mensaje=".$e->getMessage());
+        }
+    }
+
+    static public function eliminarPersona (){
+        try {
+            $ObjEspecialidad = new Especialidad();
+            if(!empty($_GET['Persona']) && !empty($_GET['Especialidad'])){
+                $ObjEspecialidad->eliminarPersonal($_GET['Persona'],$_GET['Especialidad']);
+            }else{
+                throw new Exception('No se recibio la informacion necesaria.');
+            }
+            header("Location: ../Vista/modules/persona/managerPersonal.php?id=".$_GET['Especialidad']);
+        } catch (Exception $e) {
+            var_dump($e);
+            //header("Location: ../Vista/modules/persona/manager.php?respuesta=error");
         }
     }
 

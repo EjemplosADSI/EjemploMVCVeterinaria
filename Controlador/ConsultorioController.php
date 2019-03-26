@@ -42,18 +42,39 @@ class ConsultorioController{
         }
     }
 
+    public static function consultorioIsInArray($idConsultorio, $ArrConsultorio){
+        if(count($ArrConsultorio) > 0){
+            foreach ($ArrConsultorio as $Consultorio){
+                if($Consultorio->getIdConsultorio() == $idConsultorio){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     static public function selectConsultorio ($isMultiple=false,
                                               $isRequired=true,
                                               $id="idConsultorio",
                                               $nombre="idConsultorio",
                                               $defaultValue="",
-                                              $class=""){
-        $arrConsultorios = Consultorio::getAll();
+                                              $class="",
+                                              $where="",
+                                              $arrExcluir = array()){
+        $arrConsultorios = array();
+        if($where != ""){
+            $base = "SELECT * FROM consultorio WHERE ";
+            $arrConsultorios = Consultorio::buscar($base.$where);
+        }else{
+            $arrConsultorios = Consultorio::getAll();
+        }
+
         $htmlSelect = "<select ".(($isMultiple) ? "multiple" : "")." ".(($isRequired) ? "required" : "")." id= '".$id."' name='".$nombre."' class='".$class."'>";
-        $htmlSelect .= "<option >Seleccione</option>";
+        $htmlSelect .= "<option value=''>Seleccione</option>";
         if(count($arrConsultorios) > 0){
             foreach ($arrConsultorios as $Consultorio){
-                $htmlSelect .= "<option ".(($defaultValue != "") ? (($defaultValue == $Consultorio->getIdConsultorio()) ? "selected" : "" ) : "")." value='".$Consultorio->getIdConsultorio()."'>".$Consultorio->getNombre()."</option>";
+                if (!ConsultorioController::consultorioIsInArray($Consultorio->getIdConsultorio(),$arrExcluir))
+                    $htmlSelect .= "<option ".(($defaultValue != "") ? (($defaultValue == $Consultorio->getIdConsultorio()) ? "selected" : "" ) : "")." value='".$Consultorio->getIdConsultorio()."'>".$Consultorio->getNombre()."</option>";
             }
         }
         $htmlSelect .= "</select>";

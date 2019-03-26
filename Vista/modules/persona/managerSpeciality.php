@@ -1,4 +1,5 @@
 <?php require ("../../../Modelo/Persona.php")?>
+<?php require ("../../../Controlador/EspecialidadController.php")?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +46,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>Personas <small>Administrar</small></h3>
+                        <h3><small>Especialidades de Personas</small></h3>
                     </div>
 
                 </div>
@@ -56,7 +57,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Gestionar <small>Personaes</small></h2>
+                                <h2>Gestionar <small> </small></h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -75,50 +76,89 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <p class="text-muted font-13 m-b-30">
-                                    Selecciona una Persona para gestionarla
-                                </p>
-
-                                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Documento</th>
-                                        <th>Nombre</th>
-                                        <th>Apellidos</th>
-                                        <th>Telefono</th>
-                                        <th>Correo</th>
-                                        <th>Estado</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
+                                <?php if(!empty($_GET["id"]) && isset($_GET["id"])){ ?>
                                     <?php
-                                    $arrPersonas = Persona::getAll();
-                                    foreach ($arrPersonas as $Persona){
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $Persona->getDocumento(); ?></td>
-                                            <td><?php echo $Persona->getNombres(); ?></td>
-                                            <td><?php echo $Persona->getApellidos(); ?></td>
-                                            <td><?php echo $Persona->getTelefono(); ?></td>
-                                            <td><?php echo $Persona->getCorreo(); ?></td>
-                                            <td><?php echo $Persona->getEstado(); ?></td>
-                                            <td>
-                                                <a href="edit.php?id=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Actualizar" class="btn docs-tooltip btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                                                <a href="view.php?id=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Ver" class="btn docs-tooltip btn-warning btn-xs"><i class="fa fa-eye"></i></a>
-                                                <a href="managerSpeciality.php?id=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Gestionar Especialidades" class="btn docs-tooltip btn-success btn-xs"><i class="fa fa-graduation-cap"></i></a>
-                                                <?php if ($Persona->getEstado() != "Activo"){ ?>
-                                                    <a href="../../../Controlador/PersonaController.php?action=ActivarPersona&IdPersona=<?php echo $Persona->getIdPersona(); ?>" type="button" data-toggle="tooltip" title="Activar" class="btn docs-tooltip btn-dark btn-xs"><i class="fa fa-check-square-o"></i></a>
-                                                <?php }else{ ?>
-                                                    <a type="button" href="../../../Controlador/PersonaController.php?action=InactivarPersona&IdPersona=<?php echo $Persona->getIdPersona(); ?>" data-toggle="tooltip" title="Inactivar" class="btn docs-tooltip btn-danger btn-xs"><i class="fa fa-times-circle-o"></i></a>
-                                                <?php } ?>
-                                            </td>
-                                        </tr>
+                                        $Persona = Persona::buscarForId($_GET["id"]);
+                                    ?>
+                                    <span class="section">Asociar Especialidad a <?= $Persona->getNombres()." ".$Persona->getApellidos() ?> </span>
+
+                                    <?php if(!empty($_GET['respuesta'])){ ?>
+                                        <?php if ($_GET['respuesta'] == "correcto"){ ?>
+                                            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <strong>La especialidad</strong> se a asociado correctamente.
+                                            </div>
+                                        <?php }else {?>
+                                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <strong>Error!</strong> No se pudo editar la persona intentalo nuevamente!!
+                                            </div>
+                                        <?php } ?>
                                     <?php } ?>
 
-                                    </tbody>
-                                </table>
+                                    <p class="font-gray-dark">
+                                        Seleccione la especialidad que desea asociar.
+                                    </p>
+                                    <form class="form-inline" method="post" action="../../../Controlador/PersonaController.php?action=asociarEspecialidad">
+                                        <div class="form-group">
+                                            <label for="ex3">Especialidad</label>
+                                            <input id="Persona" value="<?php echo $Persona->getIdPersona(); ?>" name="Persona" hidden required="required" type="text">
+                                            <?php
+                                                $ArrEspecialidades = $Persona->getRelEspecialidades();
+                                                echo EspecialidadController::selectEspecialidad( false,
+                                                    true,
+                                                    "Especialidad",
+                                                    "Especialidad",
+                                                    "",
+                                                    "form-control",
+                                                    "Estado = 'Activo'",
+                                                    $ArrEspecialidades);
+                                            ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-success btn-sm" value="Registrar">
+                                            <a href="manager.php" class="btn btn-dark btn-sm">Volver</a>
+                                        </div>
+                                    </form>
+
+                                    <br/><br/>
+                                    <span class="section">Gestionar Especialidades de <?= $Persona->getNombres()." ".$Persona->getApellidos() ?></span>
+                                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Especialidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <?php
+                                        $i=1;
+                                        foreach ($ArrEspecialidades as $Especialidad){
+                                            ?>
+                                            <tr>
+                                                <td><?= $i++; ?></td>
+                                                <td><?php echo $Especialidad->getNombre(); ?></td>
+                                                <td>
+                                                    <a type="button" href="../../../Controlador/PersonaController.php?action=eliminarEspecialidad&Persona=<?= $Persona->getIdPersona(); ?>&Especialidad=<?= $Especialidad->getIdEspecialidad() ?>" data-toggle="tooltip" title="Eliminar" class="btn docs-tooltip btn-danger btn-xs"><i class="fa fa-times-circle-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+
+                                        </tbody>
+                                    </table>
+                                <?php }else{ ?>
+                                    <?php if (empty($_GET["respuesta"])){ ?>
+                                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>Error!</strong> No se encontro ninguna persona con el parametro de busqueda.
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

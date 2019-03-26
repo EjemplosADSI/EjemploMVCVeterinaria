@@ -96,7 +96,13 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Especialidad <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <?= EspecialidadController::selectEspecialidad(false,true,"Especialidad","Especialidad","","form-control") ?>
+                                <?= EspecialidadController::selectEspecialidad( false,
+                                                                                true,
+                                                                                "Especialidad",
+                                                                            "Especialidad",
+                                                                            "",
+                                                                                "form-control",
+                                                                            "Estado = 'Activo'") ?>
                             </div>
                         </div>
                         <div class="item form-group">

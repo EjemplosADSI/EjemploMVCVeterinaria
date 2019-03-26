@@ -7,6 +7,7 @@
  * Time: 14:49
  */
 require_once('db_abstract_class.php');
+require ('Especialidad.php');
 
 class Persona extends db_abstract_class
 {
@@ -27,6 +28,9 @@ class Persona extends db_abstract_class
     private $Tipo_Usuario;
     private $Observaciones;
     private $Estado;
+
+    // Relaciones M * M
+    private $relEspecialidades;
 
     public function __construct($persona_data=array())
     {
@@ -51,6 +55,7 @@ class Persona extends db_abstract_class
             $this->Contrasena = "";
             $this->Tipo_Usuario = "";
             $this->Estado = "";
+            $this->relEspecialidades = "";
         }
     }
 
@@ -332,11 +337,28 @@ class Persona extends db_abstract_class
         $this->Estado = $Estado;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRelEspecialidades()
+    {
+
+        return $this->relEspecialidades;
+    }
+
+    /**
+     * @param mixed $relEspecialidades
+     */
+    public function setRelEspecialidades($relEspecialidades)
+    {
+        $this->relEspecialidades = $relEspecialidades;
+    }
+
     public static function buscarForId($id)
     {
         $Persona = new Persona();
         if ($id > 0){
-            $getrow = $Persona->getRow("SELECT * FROM persona WHERE idPersona =?", array($id));;
+            $getrow = $Persona->getRow("SELECT * FROM persona WHERE idPersona =?", array($id));
             $Persona->idPersona = $getrow['idPersona'];
             $Persona->Tipo_Documento = $getrow['Tipo_Documento'];
             $Persona->Documento = $getrow['Documento'];
@@ -354,9 +376,12 @@ class Persona extends db_abstract_class
             $Persona->Tipo_Usuario = $getrow['Tipo_Usuario'];
             $Persona->Observaciones = $getrow['Observaciones'];
             $Persona->Estado = $getrow['Estado'];
+            $Persona->relEspecialidades = $Persona->obtenerEspecialidades($getrow['idPersona']);
             $Persona->Disconnect();
             return $Persona;
         }else{
+            $Persona->Disconnect();
+            unset($Persona);
             return NULL;
         }
     }
@@ -386,6 +411,8 @@ class Persona extends db_abstract_class
             $Persona->Tipo_Usuario = $valor['Tipo_Usuario'];
             $Persona->Observaciones = $valor['Observaciones'];
             $Persona->Estado = $valor['Estado'];
+            $Persona->relEspecialidades = $Persona->obtenerEspecialidades($valor['idPersona']);
+            $Persona->Disconnect();
             array_push($arrPersonas, $Persona);
         }
         $tmp->Disconnect();
@@ -417,6 +444,11 @@ class Persona extends db_abstract_class
                 $this->Estado,
             )
         );
+
+        if($this->relEspecialidades != "" and !empty($this->relEspecialidades) and isset($this->relEspecialidades)){
+            $this->idPersona = $this->getLastId();
+            $this->asociarEspecialidad();
+        }
         $this->Disconnect();
     }
 
@@ -448,5 +480,42 @@ class Persona extends db_abstract_class
         // TODO: Implement eliminar() method.
     }
 
+    public function eliminarEspecialidad($idPersona, $idEspecialidad)
+    {
+        $idPersona = (!empty($idPersona) && isset($idPersona)) ? $idPersona : $this->idPersona;
+        $idEspecialidad = (!empty($idEspecialidad) && isset($idEspecialidad)) ? $idEspecialidad : $this->relEspecialidades->getIdEspecialidad();
+
+        $this->deleteRow("DELETE FROM persona_has_especialidad WHERE Especialidad = ? AND Persona = ?", array(
+                $idEspecialidad,
+                $idPersona,
+            )
+        );
+        $this->Disconnect();
+    }
+
+    public function asociarEspecialidad($IdPersona=0, $IdEspecialidad=0){
+        $IdPersona = (!empty($IdPersona) && isset($IdPersona)) ? $IdPersona : $this->idPersona;
+        $IdEspecialidad = (!empty($IdEspecialidad) && isset($IdEspecialidad)) ? $IdEspecialidad : $this->relEspecialidades->getIdEspecialidad();
+
+        $this->insertRow("INSERT INTO persona_has_especialidad VALUES (?, ?)", array(
+                $IdEspecialidad,
+                $IdPersona,
+            )
+        );
+        $this->Disconnect();
+    }
+
+    public function obtenerEspecialidades($IdPersona){
+        $arrEspecialidades = array();
+        $tmp = new Persona();
+        $getrows = $tmp->getRows("SELECT * FROM persona_has_especialidad WHERE Persona = ".$IdPersona.";");
+        foreach ($getrows as $valor) {
+            $Especialidad = Especialidad::buscarForId($valor['Especialidad']);
+            $Especialidad->Disconnect();
+            array_push($arrEspecialidades, $Especialidad);
+        }
+        $tmp->Disconnect();
+        return $arrEspecialidades;
+    }
 
 }

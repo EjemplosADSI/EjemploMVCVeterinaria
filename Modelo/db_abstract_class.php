@@ -35,6 +35,7 @@ abstract class db_abstract_class {
             );
             $this->datab->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->datab->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->datab->setAttribute(PDO::ATTR_PERSISTENT, true);
         }catch(PDOException $e) {
             $this->isConnected = false;
             throw new Exception($e->getMessage());
@@ -72,6 +73,16 @@ abstract class db_abstract_class {
         }
     }
 
+    //Getting last id insert
+    //$getrows = $database->getLastId();
+    public function getLastId(){
+        try{
+            return $this->datab->lastInsertId();
+        }catch(PDOException $e){
+            throw new Exception($e->getMessage());
+        }
+    }
+
     //inserting un campo
     //$insertrow = $database ->insertRow("INSERT INTO users (username, email) VALUES (?, ?)", array("Diego", "yusaf@email.com"));
     public function insertRow($query, $params){
@@ -81,6 +92,7 @@ abstract class db_abstract_class {
             }
             $stmt = $this->datab->prepare($query);
             $stmt->execute($params);
+
         }catch(PDOException $e){
             throw new Exception($e->getMessage());
         }
