@@ -79,7 +79,7 @@
                                     Selecciona una Persona para gestionarla
                                 </p>
 
-                                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                <table id="tbl_persona_manager" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
                                         <th>Documento</th>
@@ -145,21 +145,43 @@
 <script src="../../plantilla_base/gentelella/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/jszip/dist/jszip.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="../../plantilla_base/gentelella/vendors/pdfmake/build/vfs_fonts.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="../../plantilla_base/gentelella/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="../../plantilla_base/gentelella/vendors/jszip/dist/jszip.min.js"></script>
-<script src="../../plantilla_base/gentelella/vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="../../plantilla_base/gentelella/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <!-- Cropper -->
 <script src="../../plantilla_base/gentelella/vendors/cropper/dist/cropper.min.js"></script>
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('#tbl_persona_manager').DataTable({
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copy', 'print', 'excel', 'pdf'
+            ],
+            "paging":   true,       //Paginacion
+            "ordering": true,       //Ordenamiento
+            "info":     true,       //Informacion
+            "order": [[ 1, "asc" ]], //Fila que ordena
+            "language": {
+                "url": "../../build/Spanish.json"
+            },
+            "stateSave" : true, //Guardar la configuracion del usuario
+            "pagingType": "full_numbers",
+            "scrollX": true //Desplazamiento Horizontal
+        });
+    } );
+</script>
 
 <!-- Custom Theme Scripts -->
 <script src="../../build/js/custom.min.js"></script>
