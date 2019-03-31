@@ -1,3 +1,4 @@
+<?php require ("../../snippers/checkLogin.php") ?>
 <?php require ("../../../Controlador/PersonaController.php")?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,7 +173,6 @@
             </div>
         </div>
         <!-- /page content -->
-
         <?php require("../../snippers/footer.php"); ?>
     </div>
 </div>

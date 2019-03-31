@@ -1,3 +1,4 @@
+<?php require ("../../snippers/checkLogin.php") ?>
 <?php require ("../../../Modelo/Persona.php")?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +127,6 @@
             </div>
         </div>
         <!-- /page content -->
-
         <?php require("../../snippers/footer.php"); ?>
     </div>
 </div>

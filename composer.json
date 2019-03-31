@@ -2,7 +2,12 @@
     "name": "grani/ejemplo-mvc-veterinaria",
     "type": "project",
     "require": {
-        "verot/class.upload.php" : "dev-master"
+        "php": ">=5.4.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "verot/class.upload.php" : "dev-master",
+        "zendframework/zend-hydrator" : "^3.0.2"
     },
     "authors": [
         {

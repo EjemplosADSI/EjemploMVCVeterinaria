@@ -1,4 +1,7 @@
 <?php
+if(session_status() == PHP_SESSION_NONE){ //Si la session no ha iniciado
+    session_start();
+}
 require_once (__DIR__.'/../Modelo/GeneralFunctions.php');
 require_once (__DIR__.'/../Modelo/Consultorio.php');
 require_once (__DIR__.'/../Modelo/Especialidad.php');

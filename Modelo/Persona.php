@@ -518,4 +518,25 @@ class Persona extends db_abstract_class
         return $arrEspecialidades;
     }
 
+    public function Login($Usuario, $Contraseña){
+        $tmp = new Persona();
+        $resultPersonas = $tmp->getRows("SELECT * FROM persona WHERE Usuario = '$Usuario'");
+        if(count($resultPersonas) >= 1){
+            $getrows = $tmp->getRows("SELECT * FROM persona WHERE Usuario = '$Usuario' AND Contrasena = '$Contraseña'");
+            if(count($getrows) >= 1){
+                foreach ($getrows as $valor) {
+                    $resultPersonas = new Persona($valor);
+                    return $resultPersonas;
+                }
+            }else{
+                return "Contraseña Incorrecta";
+            }
+        }else{
+            return "Usuario Incorrecto";
+        }
+
+        $tmp->Disconnect();
+        return null;
+    }
+
 }

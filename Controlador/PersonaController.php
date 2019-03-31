@@ -1,7 +1,13 @@
 <?php
+if(session_status() == PHP_SESSION_NONE){ //Si la session no ha iniciado
+    session_start();
+}
+require (__DIR__.'/../vendor/autoload.php'); //Requerido para convertir un objeto en Array
 require_once (__DIR__.'/../Modelo/GeneralFunctions.php');
 require_once (__DIR__.'/../Modelo/Persona.php');
 require_once (__DIR__.'/../Modelo/Especialidad.php');
+
+use Zend\Hydrator\ReflectionHydrator; //Requerido para convertir un objeto en Array
 
 if(!empty($_GET['action'])){
     PersonaController::main($_GET['action']);
@@ -26,6 +32,10 @@ class PersonaController{
             PersonaController::asociarEspecialidad();
         }else if ($action == "eliminarEspecialidad"){
             PersonaController::eliminarEspecialidad();
+        }else if ($action == "login"){
+            PersonaController::login();
+        }else if($action == "cerrarSession"){
+            PersonaController::cerrarSession();
         }
     }
 
@@ -220,6 +230,37 @@ class PersonaController{
             var_dump($e);
             //header("Location: ../Vista/modules/persona/manager.php?respuesta=error");
         }
+    }
+
+    public static function login (){
+        try {
+            if(!empty($_POST['Usuario']) && !empty($_POST['Contrasena'])){
+                $tmpPerson = new Persona();
+                $respuesta = $tmpPerson->Login($_POST['Usuario'], $_POST['Contrasena']);
+                if (is_a($respuesta,"Persona")) {
+                    $hydrator = new ReflectionHydrator(); //Instancia de la clase para convertir objetos
+                    $ArrDataPersona = $hydrator->extract($respuesta); //Convertimos el objeto persona en un array
+                    unset($ArrDataPersona["datab"],$ArrDataPersona["isConnected"],$ArrDataPersona["relEspecialidades"]); //Limpiamos Campos no Necesarios
+                    $_SESSION['UserInSession'] = $ArrDataPersona;
+                    echo json_encode(array('type' => 'success', 'title' => 'Ingreso Correcto', 'text' => 'Sera redireccionado en un momento...'));
+                }else{
+                    echo json_encode(array('type' => 'error', 'title' => 'Error al ingresar', 'text' => $respuesta)); //Si la llamda es por Ajax
+                }
+                return $respuesta; //Si la llamada es por funcion
+            }else{
+                echo json_encode(array('type' => 'error', 'title' => 'Datos Vacios', 'text' => 'Debe ingresar la informacion del usuario y contraseña'));
+                return "Datos Vacios"; //Si la llamada es por funcion
+            }
+        } catch (Exception $e) {
+            var_dump($e);
+            header("Location: ../login.php?respuesta=error");
+        }
+    }
+
+    public static function cerrarSession (){
+        session_unset();
+        session_destroy();
+        header("Location: ../Vista/modules/persona/login.php");
     }
 
 }

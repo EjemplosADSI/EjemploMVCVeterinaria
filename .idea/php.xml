@@ -4,6 +4,9 @@
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/verot/class.upload.php" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-hydrator" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-stdlib" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />
 </project>

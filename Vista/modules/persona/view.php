@@ -1,3 +1,4 @@
+<?php require ("../../snippers/checkLogin.php") ?>
 <?php require "../../../Controlador/PersonaController.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
