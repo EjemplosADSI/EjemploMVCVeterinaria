@@ -91,8 +91,7 @@ abstract class db_abstract_class {
                 $this->__construct();
             }
             $stmt = $this->datab->prepare($query);
-            $stmt->execute($params);
-
+            return $stmt->execute($params);
         }catch(PDOException $e){
             throw new Exception($e->getMessage());
         }
