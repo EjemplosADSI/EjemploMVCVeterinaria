@@ -82,12 +82,17 @@ class Especialidad extends db_abstract_class
 
     public function insertar()
     {
-        $this->insertRow("INSERT INTO mypet.especialidad VALUES (NULL, ?, ?)", array(
+        $IdEspecialidad = null;
+        $result = $this->insertRow("INSERT INTO mypet.especialidad VALUES (NULL, ?, ?)", array(
                 $this->Nombre,
                 $this->Estado,
             )
         );
+        if($result){
+            $IdEspecialidad = $this->getLastId();
+        }
         $this->Disconnect();
+        return $IdEspecialidad;
     }
 
     public function editar()
