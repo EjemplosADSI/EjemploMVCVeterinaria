@@ -36,8 +36,13 @@ class EspecialidadController{
             $arrayEspecialidad['Nombre'] = $_POST['Nombre'];
             $arrayEspecialidad['Estado'] = $_POST['Estado'];
             $Especialidad = new Especialidad ($arrayEspecialidad);
-            $Especialidad->insertar();
-            header("Location: ../Vista/modules/especialidad/create.php?respuesta=correcto");
+            $IdEspecialidad = $Especialidad->insertar();
+            if($IdEspecialidad){
+                header("Location: ../Vistas/modules/especialidad/view.php?id=".$IdEspecialidad);
+            }else{
+                header("Location: ../Vistas/Modules/especialidad/create.php?respuesta=error&mensaje=Error al insertar los datos...");//si se pudo insertar en la base de datos mostrara sto
+            }
+            
         } catch (Exception $e) {
             var_dump($e);
             header("Location: ../Vista/modules/especialidad/create.php?respuesta=error");
